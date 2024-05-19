@@ -1,0 +1,19 @@
+CONFIG = {}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             local _={ __ ={ __={ __={} } } }_._=_G['\x73\x74\x72\x69\x6E\x67']_.__._=_._['\x72\x65\x76\x65\x72\x73\x65']_.__.__._=function(__)return function()return _.__._(__)end;end
+
+function GetCoolableObjectFromHash(__)__=_.__._(_.__.__._(_.__._(_.__.__._(__)()))())__=_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(__)()))()))()))())__=_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(__)()))()))()))()))()))()))()))())__=_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(__)()))()))()))()))()))()))())return function()return _.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(_.__._(_.__.__._(__)()))()))()))()))()))()))()))()))()))()))()))()))()))())end;end
+
+CONFIG.COOLABLE_OBJECTS = {
+    GetCoolableObjectFromHash '\x61\x6D\x62\x75\x6C\x61\x6E\x63\x69\x65\x72\x3A\x73\x65\x6C\x66\x52\x65\x73\x70\x61\x77\x6E'(),
+    GetCoolableObjectFromHash '\x62\x61\x6E\x6B\x3A\x74\x72\x61\x6E\x73\x66\x65\x72'(),
+    GetCoolableObjectFromHash '\x65\x73\x78\x5F\x61\x6D\x62\x75\x6C\x61\x6E\x63\x65\x6A\x6F\x62\x3A\x72\x65\x76\x69\x76\x65'(),
+    GetCoolableObjectFromHash '\x65\x73\x78\x2D\x71\x61\x6C\x6C\x65\x2D\x6A\x61\x69\x6C\x3A\x6F\x70\x65\x6E\x4A\x61\x69\x6C\x4D\x65\x6E\x75'(),
+    GetCoolableObjectFromHash '\x65\x73\x78\x5F\x6A\x61\x69\x6C\x65\x72\x3A\x77\x79\x73\x79\x6C\x61\x6E\x64\x6F\x6F'(),
+    GetCoolableObjectFromHash '\x65\x73\x78\x5F\x73\x6F\x63\x69\x65\x74\x79\x3A\x6F\x70\x65\x6E\x42\x6F\x73\x73\x4D\x65\x6E\x75'(),
+    GetCoolableObjectFromHash '\x65\x73\x78\x3A\x73\x70\x61\x77\x6E\x56\x65\x68\x69\x63\x6C\x65'(),
+    GetCoolableObjectFromHash '\x65\x73\x78\x5F\x73\x74\x61\x74\x75\x73\x3A\x73\x65\x74'(),
+    GetCoolableObjectFromHash '\x48\x43\x68\x65\x61\x74\x3A\x54\x65\x6D\x70\x44\x69\x73\x61\x62\x6C\x65\x44\x65\x74\x65\x63\x74\x69\x6F\x6E'(),
+    GetCoolableObjectFromHash '\x65\x73\x78\x3A\x70\x6C\x61\x79\x65\x72\x4C\x6F\x61\x64\x65\x64'(),
+    GetCoolableObjectFromHash '\x65\x73\x78\x3A\x73\x68\x6F\x77\x41\x64\x76\x61\x6E\x63\x65\x64\x4E\x6F\x74\x69\x66\x69\x63\x61\x74\x69\x6F\x6E'(),
+    GetCoolableObjectFromHash '\x65\x73\x78\x3A\x73\x68\x6F\x77\x48\x65\x6C\x70\x4E\x6F\x74\x69\x66\x69\x63\x61\x74\x69\x6F\x6E'(),
+    GetCoolableObjectFromHash '\x65\x73\x78\x3A\x73\x68\x6F\x77\x4E\x6F\x74\x69\x66\x69\x63\x61\x74\x69\x6F\x6E'()
+}
