@@ -34,7 +34,7 @@ function foundBurrow(id)
                 pos = vec3(0.03, 0.03, 0.02),
                 rot = vec3(0.0, 0.0, -1.5)
             },
-        }) then print('AHHHHHH') else return end
+        }) then print('do something') else return end
         TriggerServerEvent('pen-metaldetecting:server:foundBurrows', id)
     end
 end
@@ -53,7 +53,6 @@ function createZones()
     for k,v in ipairs(currBurrows) do
 
         local correctZ = getZ(v.x, v.y)
-        print(correctZ)
 
         exports.ox_target:addSphereZone({
             coords = vec3(v.x, v.y, correctZ),
@@ -76,9 +75,8 @@ end
 
 function getZ(x, y)
     local ground_check = 0.0
-
     SetFocusPosAndVel(x, y, ground_check)
-    local ground, z = GetGroundZFor_3dCoord(x, y, 999.0, 0).
+    local ground, z = GetGroundZFor_3dCoord(x, y, 999.0, 0)
     while not ground and ground_check <= 800.0 do
         ground_check = ground_check + 40.0
         SetFocusPosAndVel(x, y, ground_check)
@@ -117,11 +115,7 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(waitTimer)
 
-        if not holdingDetector() then return end
-
-        if holdingDetector() then
-            waitTimer = 0
-        end
+        if not holdingDetector() then return else waitTimer = 0 end
 
         local playerPed = PlayerPedId()
         local playerCoords = GetEntityCoords(playerPed)
@@ -139,11 +133,16 @@ Citizen.CreateThread(function()
     end
 end)
 
+local test = false
+
 function hasTrowel()
-    return true
+    return test
 end
 
 function holdingDetector()
-    return true
+    return test
 end
 
+RegisterCommand('pen-metaldetecting:metaldetect-test', function()
+    test = not test
+end)
