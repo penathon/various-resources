@@ -53,6 +53,7 @@ function createZones()
     for k,v in ipairs(currBurrows) do
 
         local correctZ = getZ(v.x, v.y)
+        print(correctZ)
 
         exports.ox_target:addSphereZone({
             coords = vec3(v.x, v.y, correctZ),
@@ -74,7 +75,17 @@ function createZones()
 end
 
 function getZ(x, y)
-    local ground, z = GetGroundZFor_3dCoord(x, y, 1000.0, false)
+    local ground_check = 0.0
+
+    SetFocusPosAndVel(x, y, ground_check)
+    local ground, z = GetGroundZFor_3dCoord(x, y, 999.0, 0).
+    while not ground and ground_check <= 800.0 do
+        ground_check = ground_check + 40.0
+        SetFocusPosAndVel(x, y, ground_check)
+        ground, z = GetGroundZFor_3dCoord(x, y, 999.0, 1)
+        Citizen.Wait(10)
+    end
+    ClearFocus()
     return z
 end
 
@@ -129,10 +140,10 @@ Citizen.CreateThread(function()
 end)
 
 function hasTrowel()
-    -- if user has in inventory
+    return true
 end
 
 function holdingDetector()
-    -- if user is holding metal detector
+    return true
 end
 
