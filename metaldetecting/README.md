@@ -1,6 +1,6 @@
 # metaldetecting (WIP)
 
-randomly generated coords within a given area, with a specified amount of "burrows"
+randomly generated coords within a given area, with a specified amount of "burrows", this is synced across all clients 
 
 [ox_target](https://github.com/overextended/ox_target) is used
 
