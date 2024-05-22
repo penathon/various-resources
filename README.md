@@ -1,3 +1,3 @@
-# collection of old or WIP LUA scripts / adaptations that are possible to share
+# collection of LUA scripts / adaptations that are possible for me to share and aren't currently being used.
 
 # some resources have videos
