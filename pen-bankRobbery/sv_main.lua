@@ -43,6 +43,14 @@ function checkBoxes()
     for bankName, bank in pairs(banks) do
         for _, bankData in ipairs(bank.data) do
             banks[bankName].data[1].ready = bankData.exploded
+            if bankData.exploded then
+                startHeist(bankName)
+            end
         end
     end
+end
+
+function startHeist(bankName)
+    banks[bankName].data[1].active = true
+    TriggerClientEvent('pen-bankRobbery:client:startHeist', -1, bankName)
 end

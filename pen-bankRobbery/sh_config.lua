@@ -30,7 +30,7 @@ config.banks = {
             { 
                 active = false,
                 bankDoorModel = `v_ilev_gb_vauldr`,
-                bankDoorCoords = vector3(-1211.26, -334.56, 37.92),
+                bankDoorCoords = { x = -1211.26, y = -334.56, z = 37.92},
                 -- safeCoords = {},
                 electricityBoxes = { 'vespucciBeach3', 'vespucciBeach2'},
                 ready = false,
