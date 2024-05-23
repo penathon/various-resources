@@ -34,7 +34,8 @@ config.banks = {
                 -- safeCoords = {},
                 electricityBoxes = { 'vespucciBeach3', 'vespucciBeach2'},
                 ready = false,
-                rewards = {}
+                rewards = {},
+                cooldownTime = 15
             }
         }
     }
