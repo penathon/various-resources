@@ -52,5 +52,18 @@ end
 
 function startHeist(bankName)
     banks[bankName].data[1].active = true
+    startCooldown(bankName)
     TriggerClientEvent('pen-bankRobbery:client:startHeist', -1, bankName)
+end
+
+function startCooldown(bankName)
+    banks[bankName].data[1].cooldownActive = true
+    local timeCorrected = (banks[bankName].data[1].cooldownTime * 60000)
+    lib.timer(timeCorrected, endCooldown(bankName), true)
+end
+
+function endCooldown(bankName)
+    banks[bankName].data[1].active = true
+    syncDataClient(-1)
+    TriggerClientEvent('pen-bankRobbery:client:endHeist', -1, bankName)
 end
