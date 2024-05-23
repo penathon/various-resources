@@ -65,6 +65,7 @@ end
 
 function endCooldown(bankName)
     banks[bankName].data[1].active = false
+    -- function to check electricity box that is included in bank config if yes then exploded = false
     syncDataClient(-1)
     TriggerClientEvent('pen-bankRobbery:client:endHeist', -1, bankName)
 end
