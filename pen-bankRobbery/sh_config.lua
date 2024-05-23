@@ -31,11 +31,13 @@ config.banks = {
                 active = false,
                 bankDoorModel = `v_ilev_gb_vauldr`,
                 bankDoorCoords = { x = -1211.26, y = -334.56, z = 37.92},
+                closedDoorHeading = 10,
+                openDoorHeading = 10,
                 -- safeCoords = {},
                 electricityBoxes = { 'vespucciBeach3', 'vespucciBeach2'},
                 ready = false,
                 rewards = {},
-                doorsOpen = false,
+                doorOpen = false,
                 cooldownTime = 15
             }
         }

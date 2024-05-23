@@ -10,10 +10,15 @@ RegisterNetEvent('pen-bankRobbery:server:requestData', function()
     syncDataClient(src)
 end)
 
+RegisterNetEvent('pen-bankRobbery:server:explodeDoor', function(data)
+    banks[bankName].data[1].doorOpen = true
+    syncDataClient(-1)
+    TriggerClientEvent('pen-bankRobbery:client:openDoor', -1, data)
+end)
+
 RegisterNetEvent('pen-bankRobbery:server:explodeBox', function(data)
     electricityBoxes[data].coords[1].exploded = true
-    TriggerClientEvent('pen-bankRobbery:client:removeBox', -1, data)
-    checkBoxes()
+    TriggerClientEvent('pen-bankRobbery:client:openDoor', -1, data)
     syncDataClient(-1)
 end)
 

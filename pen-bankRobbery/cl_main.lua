@@ -19,6 +19,11 @@ RegisterNetEvent('pen-bankRobbery:client:removeBox', function(name)
     removeZone(name)
 end)
 
+RegisterNetEvent('pen-bankRobbery:client:openDoor', function(name)
+    openDoor(name)
+end)
+
+
 function explodeElectricityBox(name)
     TriggerServerEvent('pen-bankRobbery:server:explodeBox', location)
 end
@@ -76,16 +81,16 @@ end
 function createBankZones(bankName)
     local bank = banks[bankName]
     if bank and bank.data and #bank.data > 0 then
-        exports.ox_target:addSphereZone({
+        exports.ox_target:addBoxZone({
             coords = vec3(bank.data[1].bankDoorCoords.x, bank.data[1].bankDoorCoords.y, bank.data[1].bankDoorCoords.z+1),
             radius = 1,
             debug = true,
             drawSprite = true,
-            name = '' .. location .. '',
+            name = '' .. bankName .. '',
             options = {
                 {
                     onSelect = function(args)
-                        --explodeDoor()
+                        explodeDoor(bankName)
                     end,
                     icon = 'fa-solid fa-circle',
                     label = '' .. bankName .. '',
@@ -97,4 +102,13 @@ end
 
 function removeZone(bankName)
     exports.ox_target:removeZone('' .. bankName .. '')
+end
+
+function explodeDoor(bankName)
+    TriggerServerEvent('pen-bankRobbery:server:explodeBox', bankName)
+end
+
+function openDoor(name)
+    local bank = banks[name]
+    vec3(bank.data[1].bankDoorCoords.x, bank.data[1].bankDoorCoords.y, bank.data[1].bankDoorCoords.z+1)
 end
