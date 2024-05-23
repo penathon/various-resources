@@ -12,6 +12,7 @@ end)
 
 RegisterNetEvent('pen-bankRobbery:server:explodeBox', function(data)
     electricityBoxes[data].coords[1].exploded = true
+    TriggerClientEvent('pen-bankRobbery:client:removeBox', -1, data)
     checkBoxes()
     syncDataClient(-1)
 end)
