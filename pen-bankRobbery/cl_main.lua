@@ -73,26 +73,25 @@ function createZones()
     end
 end
 
-function createBankZones()
-    for location, datas in pairs(banks) do
-        for _, coord in ipairs(datas.data) do
-            exports.ox_target:addSphereZone({
-                coords = vec3(coord.bankDoorCoords.x, coord.bankDoorCoords.y, coord.bankDoorCoords.z+1),
-                radius = 1,
-                debug = true,
-                drawSprite = true,
-                name = '' .. location .. '',
-                options = {
-                    {
-                        onSelect = function(args)
-                            --explodeDoor()
-                        end,
-                        icon = 'fa-solid fa-circle',
-                        label = '' .. location .. '',
-                    }
+function createBankZones(bankName)
+    local bank = banks[bankName]
+    if bank and bank.data and #bank.data > 0 then
+        exports.ox_target:addSphereZone({
+            coords = vec3(bank.data[1].bankDoorCoords.x, bank.data[1].bankDoorCoords.y, bank.data[1].bankDoorCoords.z+1),
+            radius = 1,
+            debug = true,
+            drawSprite = true,
+            name = '' .. location .. '',
+            options = {
+                {
+                    onSelect = function(args)
+                        --explodeDoor()
+                    end,
+                    icon = 'fa-solid fa-circle',
+                    label = '' .. bankName .. '',
                 }
-            })
-        end
+            }
+        })
     end
 end
 

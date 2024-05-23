@@ -67,5 +67,30 @@ function endCooldown(bankName)
     banks[bankName].data[1].active = false
     -- function to check electricity box that is included in bank config if yes then exploded = false
     syncDataClient(-1)
+    resetElectricityBoxes(bankName)
     TriggerClientEvent('pen-bankRobbery:client:endHeist', -1, bankName)
+end
+
+function resetElectricityBoxes(bankName)
+
+    if banks[bankName] then
+        for _, dataEntry in ipairs(banks[targetBankName].data) do
+            if dataEntry.electricityBoxes then
+                for _, boxName in ipairs(dataEntry.electricityBoxes) do
+                    if electricityBoxes[boxName] then
+                        for _, coord in ipairs(electricityBoxes[boxName].coords) do
+                            coord.exploded = false
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    for boxName, boxData in pairs(electricityBoxes) do
+        for _, coord in ipairs(boxData.coords) do
+            print(boxName, coord.x, coord.y, coord.z, coord.exploded)
+        end
+    end
+
 end

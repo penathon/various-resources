@@ -35,6 +35,7 @@ config.banks = {
                 electricityBoxes = { 'vespucciBeach3', 'vespucciBeach2'},
                 ready = false,
                 rewards = {},
+                doorsOpen = false,
                 cooldownTime = 15
             }
         }
