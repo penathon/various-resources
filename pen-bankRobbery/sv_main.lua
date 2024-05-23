@@ -64,7 +64,7 @@ function startCooldown(bankName)
 end
 
 function endCooldown(bankName)
-    banks[bankName].data[1].active = true
+    banks[bankName].data[1].active = false
     syncDataClient(-1)
     TriggerClientEvent('pen-bankRobbery:client:endHeist', -1, bankName)
 end
