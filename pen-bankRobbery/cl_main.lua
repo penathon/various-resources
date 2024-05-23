@@ -11,6 +11,14 @@ RegisterNetEvent('pen-bankRobbery:client:startHeist', function(bankName)
     createBankZones(bankName)
 end)
 
+RegisterNetEvent('pen-bankRobbery:client:endHeist', function(bankName)
+    removeZone(bankName)
+end)
+
+RegisterNetEvent('pen-bankRobbery:client:removeBox', function(name)
+    removeZone(name)
+end)
+
 function explodeElectricityBox(name)
     TriggerServerEvent('pen-bankRobbery:server:explodeBox', location)
 end
@@ -86,4 +94,8 @@ function createBankZones()
             })
         end
     end
+end
+
+function removeZone(bankName)
+    exports.ox_target:removeZone('' .. bankName .. '')
 end
