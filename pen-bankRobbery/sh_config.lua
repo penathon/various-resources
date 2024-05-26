@@ -8,6 +8,7 @@ config.electricityBoxes = {
                 x = -2231.72,
                 y = -326.69, 
                 z = 36.4,
+                rotation =  29.4,
             }
         }
     },
@@ -17,6 +18,7 @@ config.electricityBoxes = {
                 x = -1231.72,
                 y = -326.69, 
                 z = 36.4,
+                rotation =  29.4,
             }
         }
     }

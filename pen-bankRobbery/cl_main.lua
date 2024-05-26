@@ -1,6 +1,7 @@
 local electricityBoxes = {}
 local banks = {}
 local waitTimer = 2500
+local boxesExploded = false
 
 RegisterNetEvent('pen-bankRobbery:client:syncData', function(data, data2)
     electricityBoxes = data
@@ -8,11 +9,12 @@ RegisterNetEvent('pen-bankRobbery:client:syncData', function(data, data2)
 end)
 
 RegisterNetEvent('pen-bankRobbery:client:startHeist', function(bankName)
-    createBankZones(bankName)
+    boxesExploded = true
 end)
 
 RegisterNetEvent('pen-bankRobbery:client:endHeist', function(bankName)
     removeZone(bankName)
+    boxesExploded = false
 end)
 
 RegisterNetEvent('pen-bankRobbery:client:removeZone', function(name)
@@ -22,6 +24,7 @@ end)
 
 function explodeElectricityBox(name)
     TriggerServerEvent('pen-bankRobbery:server:explodeBox', name)
+    print(name)
 end
 
 function explodeBox(location)
@@ -55,9 +58,11 @@ function createZones()
     for location, data in pairs(electricityBoxes) do
         for _, coord in ipairs(data.coords) do
             if not coord.exploded then
-                exports.ox_target:addSphereZone({
+                print(location)
+                exports.ox_target:addBoxZone({
                     coords = vec3(coord.x, coord.y, coord.z+1),
-                    radius = 1,
+                    rotation = coord.rotation,
+                    size = vec3(1.5, 1, 1.75),
                     debug = true,
                     drawSprite = true,
                     name = '' .. location .. '',
@@ -76,34 +81,8 @@ function createZones()
     end
 end
 
-function createBankZones(bankName)
-    local bank = banks[bankName]
-    if bank and bank.data and #bank.data > 0 then
-        exports.ox_target:addBoxZone({
-            coords = vec3(bank.data[1].bankDoorCoords.x, bank.data[1].bankDoorCoords.y, bank.data[1].bankDoorCoords.z+1),
-            radius = 1,
-            debug = true,
-            drawSprite = true,
-            name = '' .. bankName .. '',
-            options = {
-                {
-                    onSelect = function(args)
-                        explodeDoor(bankName)
-                    end,
-                    icon = 'fa-solid fa-circle',
-                    label = '' .. bankName .. '',
-                }
-            }
-        })
-    end
-end
-
 function removeZone(bankName)
     exports.ox_target:removeZone('' .. bankName .. '')
-end
-
-function explodeDoor(bankName)
-    TriggerServerEvent('pen-bankRobbery:server:explodeDoor', bankName)
 end
 
 Citizen.CreateThread(function()
@@ -133,3 +112,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(waitTimer)
     end
 end)
+
+-- create polzyzone for hacking device thing that get created when heist started and door isn't opened
+-- when opened destroy on server
+-- destroy on heist end
