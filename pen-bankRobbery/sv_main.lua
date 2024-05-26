@@ -11,14 +11,15 @@ RegisterNetEvent('pen-bankRobbery:server:requestData', function()
 end)
 
 RegisterNetEvent('pen-bankRobbery:server:explodeDoor', function(data)
-    banks[bankName].data[1].doorOpen = true
+    banks[data].data[1].doorOpen = true
+    TriggerClientEvent('pen-bankRobbery:client:removeZone', -1, data)
     syncDataClient(-1)
-    TriggerClientEvent('pen-bankRobbery:client:openDoor', -1, data)
 end)
 
 RegisterNetEvent('pen-bankRobbery:server:explodeBox', function(data)
     electricityBoxes[data].coords[1].exploded = true
-    TriggerClientEvent('pen-bankRobbery:client:openDoor', -1, data)
+    TriggerClientEvent('pen-bankRobbery:client:removeZone', -1, data)
+    checkBoxes()
     syncDataClient(-1)
 end)
 
@@ -70,7 +71,6 @@ end
 
 function endCooldown(bankName)
     banks[bankName].data[1].active = false
-    -- function to check electricity box that is included in bank config if yes then exploded = false
     syncDataClient(-1)
     resetElectricityBoxes(bankName)
     TriggerClientEvent('pen-bankRobbery:client:endHeist', -1, bankName)
@@ -79,7 +79,7 @@ end
 function resetElectricityBoxes(bankName)
 
     if banks[bankName] then
-        for _, dataEntry in ipairs(banks[targetBankName].data) do
+        for _, dataEntry in ipairs(banks[bankName].data) do
             if dataEntry.electricityBoxes then
                 for _, boxName in ipairs(dataEntry.electricityBoxes) do
                     if electricityBoxes[boxName] then
@@ -91,11 +91,4 @@ function resetElectricityBoxes(bankName)
             end
         end
     end
-
-    for boxName, boxData in pairs(electricityBoxes) do
-        for _, coord in ipairs(boxData.coords) do
-            print(boxName, coord.x, coord.y, coord.z, coord.exploded)
-        end
-    end
-
 end

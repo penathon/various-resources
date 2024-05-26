@@ -1,6 +1,6 @@
 local electricityBoxes = {}
 local banks = {}
-local waitTimer = 5000
+local waitTimer = 2500
 
 RegisterNetEvent('pen-bankRobbery:client:syncData', function(data, data2)
     electricityBoxes = data
@@ -15,17 +15,13 @@ RegisterNetEvent('pen-bankRobbery:client:endHeist', function(bankName)
     removeZone(bankName)
 end)
 
-RegisterNetEvent('pen-bankRobbery:client:removeBox', function(name)
+RegisterNetEvent('pen-bankRobbery:client:removeZone', function(name)
     removeZone(name)
-end)
-
-RegisterNetEvent('pen-bankRobbery:client:openDoor', function(name)
-    openDoor(name)
 end)
 
 
 function explodeElectricityBox(name)
-    TriggerServerEvent('pen-bankRobbery:server:explodeBox', location)
+    TriggerServerEvent('pen-bankRobbery:server:explodeBox', name)
 end
 
 function explodeBox(location)
@@ -58,22 +54,24 @@ end)
 function createZones()
     for location, data in pairs(electricityBoxes) do
         for _, coord in ipairs(data.coords) do
-            exports.ox_target:addSphereZone({
-                coords = vec3(coord.x, coord.y, coord.z+1),
-                radius = 1,
-                debug = true,
-                drawSprite = true,
-                name = '' .. location .. '',
-                options = {
-                    {
-                        onSelect = function(args)
-                            explodeBox(location)
-                        end,
-                        icon = 'fa-solid fa-circle',
-                        label = '' .. location .. '',
+            if not coord.exploded then
+                exports.ox_target:addSphereZone({
+                    coords = vec3(coord.x, coord.y, coord.z+1),
+                    radius = 1,
+                    debug = true,
+                    drawSprite = true,
+                    name = '' .. location .. '',
+                    options = {
+                        {
+                            onSelect = function(args)
+                                explodeBox(location)
+                            end,
+                            icon = 'fa-solid fa-circle',
+                            label = '' .. location .. '',
+                        }
                     }
-                }
-            })
+                })
+            end
         end
     end
 end
@@ -105,10 +103,33 @@ function removeZone(bankName)
 end
 
 function explodeDoor(bankName)
-    TriggerServerEvent('pen-bankRobbery:server:explodeBox', bankName)
+    TriggerServerEvent('pen-bankRobbery:server:explodeDoor', bankName)
 end
 
-function openDoor(name)
-    local bank = banks[name]
-    vec3(bank.data[1].bankDoorCoords.x, bank.data[1].bankDoorCoords.y, bank.data[1].bankDoorCoords.z+1)
-end
+Citizen.CreateThread(function()
+    while true do
+        for bank, location in pairs(banks) do
+            for _, coord in ipairs(location.data) do
+                local ped = PlayerPedId()
+                local pos = GetEntityCoords(ped)
+                local bankCoords = vec3(coord.bankDoorCoords.x, coord.bankDoorCoords.y, coord.bankDoorCoords.z)
+                local distance = #(pos - bankCoords)
+        
+                if distance < 15 then
+                    if coord.doorOpen then
+                        local object = GetClosestObjectOfType(bankCoords, 5.0, coord.bankDoorModel, false, false, false)
+                        if object ~= 0 then
+                            SetEntityHeading(object, coord.openDoorHeading)
+                        end
+                    else
+                        local object = GetClosestObjectOfType(bankCoords, 5.0, coord.bankDoorModel, false, false, false)
+                        if object ~= 0 then
+                            SetEntityHeading(object, coord.closedDoorHeading)
+                        end
+                    end
+                end
+            end
+        end
+        Citizen.Wait(waitTimer)
+    end
+end)
