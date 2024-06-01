@@ -66,7 +66,7 @@ end
 function startCooldown(bankName)
     banks[bankName].data[1].cooldownActive = true
     local timeCorrected = (banks[bankName].data[1].cooldownTime * 60000)
-    lib.timer(timeCorrected, endCooldown(bankName), true)
+    --lib.timer(timeCorrected, endCooldown(bankName), false)
 end
 
 function endCooldown(bankName)
