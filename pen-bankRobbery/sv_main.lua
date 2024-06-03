@@ -6,29 +6,30 @@ function syncDataClient(player)
 end
 
 RegisterNetEvent('pen-bankRobbery:server:requestData', function()
-    local src = source
-    syncDataClient(src)
+    syncDataClient(source)
 end)
 
 RegisterNetEvent('pen-bankRobbery:server:explodeDoor', function(data)
-    banks[data].data[1].doorOpen = true
+    local bankData = banks[data].data[1]
+    bankData.doorOpen = true
     TriggerClientEvent('pen-bankRobbery:client:removeZone', -1, data)
     syncDataClient(-1)
 end)
 
 RegisterNetEvent('pen-bankRobbery:server:explodeBox', function(data)
-    electricityBoxes[data].coords[1].exploded = true
-    TriggerClientEvent('pen-bankRobbery:client:removeZone', -1, data)
-    checkBoxes()
-    syncDataClient(-1)
+    local box = electricityBoxes[data]
+    if box then
+        box.coords[1].exploded = true
+        TriggerClientEvent('pen-bankRobbery:client:removeZone', -1, data)
+        checkBoxes()
+        syncDataClient(-1)
+    end
 end)
 
 function checkBoxes()
-    local allExploded
-
     for bankName, bank in pairs(banks) do
         for _, bankData in ipairs(bank.data) do
-            allExploded = true
+            local allExploded = true
             for _, boxName in ipairs(bankData.electricityBoxes) do
                 local box = electricityBoxes[boxName]
                 if box then
@@ -44,13 +45,8 @@ function checkBoxes()
                 if not allExploded then break end
             end
             bankData.exploded = allExploded
-        end
-    end
-    
-    for bankName, bank in pairs(banks) do
-        for _, bankData in ipairs(bank.data) do
-            banks[bankName].data[1].ready = bankData.exploded
-            if bankData.exploded then
+            banks[bankName].data[1].ready = allExploded
+            if allExploded then
                 startHeist(bankName)
             end
         end
@@ -58,32 +54,36 @@ function checkBoxes()
 end
 
 function startHeist(bankName)
-    banks[bankName].data[1].active = true
+    local bankData = banks[bankName].data[1]
+    bankData.active = true
     startCooldown(bankName)
     TriggerClientEvent('pen-bankRobbery:client:startHeist', -1, bankName)
 end
 
 function startCooldown(bankName)
-    banks[bankName].data[1].cooldownActive = true
-    local timeCorrected = (banks[bankName].data[1].cooldownTime * 60000)
+    local bankData = banks[bankName].data[1]
+    bankData.cooldownActive = true
+    local timeCorrected = bankData.cooldownTime * 60000
     --lib.timer(timeCorrected, endCooldown(bankName), false)
 end
 
 function endCooldown(bankName)
-    banks[bankName].data[1].active = false
+    local bankData = banks[bankName].data[1]
+    bankData.active = false
     syncDataClient(-1)
     resetElectricityBoxes(bankName)
     TriggerClientEvent('pen-bankRobbery:client:endHeist', -1, bankName)
 end
 
 function resetElectricityBoxes(bankName)
-
-    if banks[bankName] then
-        for _, dataEntry in ipairs(banks[bankName].data) do
+    local bank = banks[bankName]
+    if bank then
+        for _, dataEntry in ipairs(bank.data) do
             if dataEntry.electricityBoxes then
                 for _, boxName in ipairs(dataEntry.electricityBoxes) do
-                    if electricityBoxes[boxName] then
-                        for _, coord in ipairs(electricityBoxes[boxName].coords) do
+                    local box = electricityBoxes[boxName]
+                    if box then
+                        for _, coord in ipairs(box.coords) do
                             coord.exploded = false
                         end
                     end
